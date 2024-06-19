@@ -1,6 +1,8 @@
-import MovieSummary from "./MovieSummary";
+import { useState } from "react";
 
-export default function Right({ isOpen2, setIsOpen2, watched, average }) {
+export default function WatchBox({ children }) {
+  const [isOpen2, setIsOpen2] = useState(true);
+
   return (
     <div className="box">
       <button
@@ -9,7 +11,7 @@ export default function Right({ isOpen2, setIsOpen2, watched, average }) {
       >
         {isOpen2 ? "–" : "+"}
       </button>
-      {isOpen2 && <MovieSummary watched={watched} average={average} />}
+      {isOpen2 && children}
     </div>
   );
 }
