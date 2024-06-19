@@ -1,13 +1,13 @@
 import { useState } from "react";
 import "./index.css";
-import Nav from "./Nav";
-import Main from "./Main";
-import NumResults from "./NumResults";
-import Search from "./Search";
-import ListBox from "./ListBox";
-import MovieList from "./MovieList";
-import WatchBox from "./WatchBox";
-import MovieSummary from "./MovieSummary";
+import Nav from "./NavBar/Nav";
+import Search from "./NavBar/Search";
+import NumResults from "./NavBar/NumResults";
+import Main from "./Main/Main";
+import Box from "./Main/Box";
+import MovieList from "./Main/ListBox/MovieList";
+import MovieSummary from "./Main/SummaryBox/MovieSummary";
+import WatchList from "./Main/SummaryBox/WatchList";
 
 const tempMovieData = [
   {
@@ -62,6 +62,7 @@ const average = (arr) =>
 export default function App() {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState(tempMovieData);
+  const [watched, setWatched] = useState(tempWatchedData);
 
   return (
     <>
@@ -70,12 +71,15 @@ export default function App() {
         <NumResults movies={movies} />
       </Nav>
       <Main>
-        <ListBox>
-          <MovieList movies={movies} />
-        </ListBox>
-        <WatchBox movies={movies} average={average}>
-          <MovieSummary tempWatchedData={tempWatchedData} average={average} />
-        </WatchBox>
+        <Box element={<MovieList movies={movies} />} />
+        <Box
+          element={
+            <>
+              <MovieSummary watched={watched} average={average} />
+              <WatchList watched={watched} />
+            </>
+          }
+        />
       </Main>
     </>
   );

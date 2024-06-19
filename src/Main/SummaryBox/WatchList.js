@@ -1,4 +1,4 @@
-import { WatchedMovie } from "./WatchedMovie.1";
+import { WatchedMovie } from "./WatchedMovie";
 
 export default function WatchList({ watched }) {
   return (

@@ -1,8 +1,4 @@
-import { useState } from "react";
-
-import WatchList from "./WatchList";
-export default function MovieSummary({ tempWatchedData, average }) {
-  const [watched, setWatched] = useState(tempWatchedData);
+export default function MovieSummary({ watched, average }) {
   const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
   const avgUserRating = average(watched.map((movie) => movie.userRating));
   const avgRuntime = average(watched.map((movie) => movie.runtime));
@@ -30,7 +26,6 @@ export default function MovieSummary({ tempWatchedData, average }) {
           </p>
         </div>
       </div>
-      <WatchList watched={watched} />
     </>
   );
 }
