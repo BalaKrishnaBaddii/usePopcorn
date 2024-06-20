@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 const containerStyle = {
   display: "flex",
@@ -10,14 +11,14 @@ const starCotainerStyle = {
   gap: "5px",
 };
 
-const starSelected = {
-  display: "block",
-  height: "48px",
-  width: "48px",
-  cursor: "pointer",
-  margin: "0",
-  filter:
-    "invert(91%) sepia(18%) saturate(4833%) hue-rotate(9deg) brightness(110%) contrast(112%)",
+StarRatings.propTypes = {
+  maxRating: PropTypes.number,
+  color: PropTypes.string,
+  size: PropTypes.number,
+  defaultRating: PropTypes.number,
+  className: PropTypes.string,
+  messages: PropTypes.array,
+  onRating: PropTypes.func,
 };
 
 export default function StarRatings({

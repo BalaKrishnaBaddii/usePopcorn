@@ -2,22 +2,7 @@ import react, { useState } from "react";
 import reactDom from "react-dom/client";
 import App from "./App";
 import StarRatings from "./StarRatings";
-
-const root = reactDom.createRoot(document.getElementById("root"));
-
-root.render(
-  <react.StrictMode>
-    <App />
-    <Rating />
-
-    {/* <StarRatings
-      maxRating={5}
-      messages={["Terriable", "Bad", "Okay", "Good", "Amazing"]}
-      defaultRating={1}
-    /> */}
-    {/* <StarRatings maxRating={5} color="red" size={30} defaultRating={3} /> */}
-  </react.StrictMode>
-);
+import TextBox from "./TextExpander";
 
 function Rating() {
   const [movieRating, SetMovieRating] = useState(0);
@@ -25,13 +10,23 @@ function Rating() {
   return (
     <>
       <StarRatings
-        size={48}
-        color="green"
         maxRating={5}
+        size={50}
+        color={"seagreen"}
         onRating={SetMovieRating}
         messages={["Flop", "Bad", "Average", "Good", "Very Good"]}
+        defaultRating={2}
       />
       <p>This Movie has reated {movieRating} Rating</p>
     </>
   );
 }
+const root = reactDom.createRoot(document.getElementById("root"));
+
+root.render(
+  <react.StrictMode>
+    {/* <App />
+    <Rating /> */}
+    <TextBox />
+  </react.StrictMode>
+);
