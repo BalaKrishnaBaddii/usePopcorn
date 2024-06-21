@@ -25,8 +25,8 @@ const root = reactDom.createRoot(document.getElementById("root"));
 
 root.render(
   <react.StrictMode>
-    {/* <App />
-    <Rating /> */}
+    <App />
+    <Rating />
     <TextBox />
   </react.StrictMode>
 );

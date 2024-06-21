@@ -232,7 +232,7 @@ body {
 }
 
 .summary p {
-  display: flex auto;
+  display: flex;
   align-items: center;
   gap: 0.8rem;
 }

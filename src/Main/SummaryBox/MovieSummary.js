@@ -10,7 +10,7 @@ export default function MovieSummary({ watched, average }) {
         <div>
           <p>
             <span>#️⃣</span>
-            <span>{watched.length} movies</span>
+            <span>{watched.length} Movies</span>
           </p>
           <p>
             <span>⭐️</span>
