@@ -66,22 +66,39 @@ export default function App() {
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState(tempWatchedData);
   const [isloading, setIsloading] = useState(false);
+  const [error, setError] = useState("");
 
-  const q = "avengers";
+  useEffect(
+    function () {
+      async function fetchMovies() {
+        try {
+          setIsloading(true);
+          const res = await fetch(
+            `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+          );
 
-  useEffect(function () {
-    async function fetchMovies() {
-      setIsloading(true);
-      const res = await fetch(
-        `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
-      );
-      const data = await res.json();
-      setMovies(data.Search);
-      setIsloading(false);
-      console.log(data.Search);
-    }
-    fetchMovies();
-  }, []);
+          if (!res.ok) {
+            throw new Error("Something went wrong with fetching movies");
+          }
+
+          const data = await res.json();
+          if (data.Response === "False") {
+            throw new Error("Movie not Found");
+          }
+          setMovies(data.Search);
+          console.log(data);
+        } catch (err) {
+          console.error(err.message, "message");
+          setError(err.message);
+        } finally {
+          setIsloading(false);
+        }
+      }
+      fetchMovies();
+    },
+    [query]
+  );
+
   return (
     <>
       <Nav>
@@ -89,24 +106,33 @@ export default function App() {
         <NumResults movies={movies} />
       </Nav>
       <Main>
-        {isloading ? (
-          <Loader />
-        ) : (
-          <Box element={<MovieList movies={movies} />} />
-        )}
-        <Box
-          element={
-            <>
-              <MovieSummary watched={watched} average={average} />
-              <WatchList watched={watched} />
-            </>
-          }
-        />
+        <Box>
+          {isloading && <Loader />}
+          {!error && !isloading && (
+            <MovieList movies={movies} key={movies.imdbID} />
+          )}
+          {error && <ErrorMessage message={error} />}
+        </Box>
+
+        <Box>
+          <>
+            <MovieSummary watched={watched} average={average} />
+            <WatchList watched={watched} />
+          </>
+        </Box>
       </Main>
     </>
   );
 }
 
+function ErrorMessage({ message }) {
+  return (
+    <p className="error">
+      <span>📛 </span>
+      {message}
+    </p>
+  );
+}
 function Loader() {
   return <p className="loader">loading...</p>;
 }

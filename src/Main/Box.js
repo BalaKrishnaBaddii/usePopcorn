@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Box({ element }) {
+export default function Box({ children }) {
   const [isOpen, setisOpen] = useState(true);
 
   return (
@@ -8,7 +8,7 @@ export default function Box({ element }) {
       <button className="btn-toggle" onClick={() => setisOpen((open) => !open)}>
         {isOpen ? "–" : "+"}
       </button>
-      {isOpen && element}
+      {isOpen && children}
     </div>
   );
 }
