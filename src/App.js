@@ -68,10 +68,13 @@ export default function App() {
   const [isloading, setIsloading] = useState(false);
   const [error, setError] = useState("");
 
+  const tempQuery = "interstellar";
+
   useEffect(
     function () {
       async function fetchMovies() {
         try {
+          setError("");
           setIsloading(true);
           const res = await fetch(
             `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
@@ -82,17 +85,22 @@ export default function App() {
           }
 
           const data = await res.json();
+          console.log(data);
           if (data.Response === "False") {
             throw new Error("Movie not Found");
           }
           setMovies(data.Search);
-          console.log(data);
         } catch (err) {
-          console.error(err.message, "message");
           setError(err.message);
         } finally {
           setIsloading(false);
         }
+      }
+
+      if (!query.length) {
+        setError("");
+        setMovies([]);
+        return;
       }
       fetchMovies();
     },

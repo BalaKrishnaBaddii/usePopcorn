@@ -57,23 +57,9 @@ body {
   overflow: auto;
   position: relative;
 }
-/* For Firefox */
-.box {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
-}
 
 .box::-webkit-scrollbar {
-  width: 10px;
-}
-
-.box::-webkit-scrollbar-track {
-  background: var(--color-scrollbar-track);
-}
-
-.box::-webkit-scrollbar-thumb {
-  background-color: var(--color-scrollbar-thumb);
-  border-radius: 5px;
+  width: 1px;
 }
 
 .loader {
