@@ -79,6 +79,11 @@ export default function App() {
     setSelectedid(null);
   }
 
+  function handleSearch(q) {
+    setTimeout(setQuery(q), 1500);
+    if (q !== query) setSelectedid(null);
+  }
+
   useEffect(
     function () {
       async function fetchMovies() {
@@ -119,7 +124,7 @@ export default function App() {
   return (
     <>
       <Nav>
-        <Search query={query} setQuery={setQuery} />
+        <Search query={query} onSearch={handleSearch} />
         <NumResults movies={movies} />
       </Nav>
       <Main>
@@ -158,6 +163,7 @@ function ErrorMessage({ message }) {
     </p>
   );
 }
+
 export function Loader() {
   return <p className="loader">Loading...</p>;
 }

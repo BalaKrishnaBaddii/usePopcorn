@@ -1,10 +1,10 @@
-export default function Search({ setQuery }) {
+export default function Search({ onSearch }) {
   return (
     <input
       className="search"
       type="text"
       placeholder="Search movies..."
-      onChange={(e) => setQuery(e.target.value)}
+      onChange={(e) => onSearch(e.target.value)}
     />
   );
 }
