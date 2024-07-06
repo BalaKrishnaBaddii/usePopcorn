@@ -66,7 +66,7 @@ export const KEY = "1934cdbf";
 export default function App() {
   const [query, setQuery] = useState("avengers");
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [watched, setWatched] = useState([]);
   const [isloading, setIsloading] = useState(false);
   const [error, setError] = useState("");
   const [selectedID, setSelectedid] = useState(null);
@@ -75,13 +75,26 @@ export default function App() {
     setSelectedid((selectedID) => (selectedID === id ? null : id));
   }
 
-  function handClose() {
+  function handleCloseMovie() {
     setSelectedid(null);
   }
 
   function handleSearch(q) {
     setTimeout(setQuery(q), 1500);
     if (q !== query) setSelectedid(null);
+  }
+
+  function handleWatched(movie) {
+    setWatched((watched) => [
+      ...watched,
+      movie.imdbID === watched.imdbID
+        ? { ...watched, imdbRating: movie.imdbRating }
+        : movie,
+    ]);
+  }
+
+  function handleDeleteWatched(id) {
+    setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
 
   useEffect(
@@ -111,7 +124,7 @@ export default function App() {
         }
       }
 
-      if (!query.length) {
+      if (query.length < 3) {
         setError("");
         setMovies([]);
         return;
@@ -142,11 +155,19 @@ export default function App() {
 
         <Box>
           {selectedID ? (
-            <MovieDetails selectedID={selectedID} handleClose={handClose} />
+            <MovieDetails
+              selectedID={selectedID}
+              handleClose={handleCloseMovie}
+              onAddwatched={handleWatched}
+              watched={watched}
+            />
           ) : (
             <>
               <MovieSummary watched={watched} average={average} />
-              <WatchList watched={watched} />
+              <WatchList
+                watched={watched}
+                onDeleteWatched={handleDeleteWatched}
+              />
             </>
           )}
         </Box>
