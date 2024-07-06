@@ -59,7 +59,7 @@ const tempWatchedData = [
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-const KEY = "f84fc31d";
+const KEY = "1934cdbf";
 
 export default function App() {
   const [query, setQuery] = useState("avengers");
@@ -67,8 +67,15 @@ export default function App() {
   const [watched, setWatched] = useState(tempWatchedData);
   const [isloading, setIsloading] = useState(false);
   const [error, setError] = useState("");
+  const [selectedID, setSelectedid] = useState(null);
 
-  const tempQuery = "interstellar";
+  function handleSelectedMovie(id) {
+    setSelectedid((selectedID) => (selectedID === id ? null : id));
+  }
+
+  function handClose() {
+    setSelectedid(null);
+  }
 
   useEffect(
     function () {
@@ -117,19 +124,36 @@ export default function App() {
         <Box>
           {isloading && <Loader />}
           {!error && !isloading && (
-            <MovieList movies={movies} key={movies.imdbID} />
+            <MovieList
+              movies={movies}
+              key={movies.imdbID}
+              onSelectMovie={handleSelectedMovie}
+            />
           )}
           {error && <ErrorMessage message={error} />}
         </Box>
 
         <Box>
-          <>
-            <MovieSummary watched={watched} average={average} />
-            <WatchList watched={watched} />
-          </>
+          {selectedID ? (
+            <MovieDetails selectedID={selectedID} handleClose={handClose} />
+          ) : (
+            <>
+              <MovieSummary watched={watched} average={average} />
+              <WatchList watched={watched} />
+            </>
+          )}
         </Box>
       </Main>
     </>
+  );
+}
+
+function MovieDetails({ selectedID, handleClose }) {
+  return (
+    <div className="details">
+      <button onClick={handleClose}>⬅️</button>
+      <p>{selectedID}</p>
+    </div>
   );
 }
 
