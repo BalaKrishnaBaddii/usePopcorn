@@ -8,6 +8,8 @@ import Box from "./Main/Box";
 import MovieList from "./Main/ListBox/MovieList";
 import MovieSummary from "./Main/SummaryBox/MovieSummary";
 import WatchList from "./Main/SummaryBox/WatchList";
+import { flushSync } from "react-dom";
+import { MovieDetails } from "./MovieDetails";
 
 const tempMovieData = [
   {
@@ -59,7 +61,7 @@ const tempWatchedData = [
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-const KEY = "1934cdbf";
+export const KEY = "1934cdbf";
 
 export default function App() {
   const [query, setQuery] = useState("avengers");
@@ -148,15 +150,6 @@ export default function App() {
   );
 }
 
-function MovieDetails({ selectedID, handleClose }) {
-  return (
-    <div className="details">
-      <button onClick={handleClose}>⬅️</button>
-      <p>{selectedID}</p>
-    </div>
-  );
-}
-
 function ErrorMessage({ message }) {
   return (
     <p className="error">
@@ -165,6 +158,6 @@ function ErrorMessage({ message }) {
     </p>
   );
 }
-function Loader() {
-  return <p className="loader">loading...</p>;
+export function Loader() {
+  return <p className="loader">Loading...</p>;
 }

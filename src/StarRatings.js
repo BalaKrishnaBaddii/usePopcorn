@@ -45,6 +45,7 @@ export default function StarRatings({
     setRating(rating);
     onRating(rating);
   }
+
   return (
     <div style={containerStyle}>
       <div style={starCotainerStyle}>
