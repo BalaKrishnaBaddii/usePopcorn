@@ -39,11 +39,27 @@ export function MovieDetails({
         const data = await res.json();
         setMovie(data);
         setIsloading(false);
+        return function () {
+          setMovie({});
+        };
       }
       getMovieDetails();
     },
     [selectedID]
   );
+
+  useEffect(
+    function () {
+      if (!title) return;
+      document.title = `Movie | ${title}`;
+      return function () {
+        document.title = "usePopcorn";
+        console.log(`${title} is reset`);
+      };
+    },
+    [title]
+  );
+
   function handleOnrating(rating) {
     setUserRating(rating);
   }
