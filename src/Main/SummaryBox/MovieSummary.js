@@ -20,7 +20,7 @@ export default function MovieSummary({ watched, average }) {
           </p>
           <p>
             <span>🌟</span>
-            <span>{avgUserRating.toFixed(2)}</span>
+            <span>{avgUserRating.toFixed(1)}</span>
           </p>
           <p>
             <span>⏳</span>

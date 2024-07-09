@@ -31,6 +31,22 @@ export function MovieDetails({
 
   useEffect(
     function () {
+      function callback(e) {
+        if (e.code === "Escape") {
+          handleClose();
+        }
+      }
+      document.addEventListener("keydown", callback);
+
+      return function () {
+        document.removeEventListener("keydown", callback);
+      };
+    },
+    [handleClose]
+  );
+
+  useEffect(
+    function () {
       async function getMovieDetails() {
         setIsloading(true);
         const res = await fetch(
@@ -54,7 +70,6 @@ export function MovieDetails({
       document.title = `Movie | ${title}`;
       return function () {
         document.title = "usePopcorn";
-        console.log(`${title} is reset`);
       };
     },
     [title]

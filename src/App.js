@@ -32,7 +32,7 @@ export default function App() {
   }
 
   function handleSearch(q) {
-    setTimeout(setQuery(q), 1500);
+    setQuery(q);
     if (q !== query) setSelectedid(null);
   }
 
@@ -52,11 +52,10 @@ export default function App() {
   useEffect(
     function () {
       const controller = new AbortController();
-
       async function fetchMovies() {
         try {
-          setError("");
           setIsloading(true);
+          setError("");
           const res = await fetch(
             `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
             { signal: controller.signal }
@@ -67,17 +66,16 @@ export default function App() {
           }
 
           const data = await res.json();
-          console.log(data);
           if (data.Response === "False") {
             throw new Error("Movie not Found");
           }
           setMovies(data.Search);
+          setError("");
         } catch (err) {
-          console.log(err.message);
-          if (err.message !== "AbortError") {
+          if (err.name !== "AbortError") {
+            console.log(err.message);
             setError(err.message);
           }
-          setError("");
         } finally {
           setIsloading(false);
         }
@@ -88,6 +86,7 @@ export default function App() {
         setMovies([]);
         return;
       }
+
       fetchMovies();
 
       return function () {
@@ -106,6 +105,7 @@ export default function App() {
       <Main>
         <Box>
           {isloading && <Loader />}
+          {error && <ErrorMessage message={error} />}
           {!error && !isloading && (
             <MovieList
               movies={movies}
@@ -113,7 +113,6 @@ export default function App() {
               onSelectMovie={handleSelectedMovie}
             />
           )}
-          {error && <ErrorMessage message={error} />}
         </Box>
 
         <Box>
