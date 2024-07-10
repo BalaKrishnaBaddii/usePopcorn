@@ -29,6 +29,29 @@ export function MovieDetails({
     Genre: genre,
   } = movie;
 
+  // /* eslint-disable */
+  // if (imdbRating > 7) [isTop, setIsTop] = useState(true);
+  // if (imdbRating > 7) return <p>its done</p>;
+
+  function handleOnrating(rating) {
+    setUserRating(rating);
+  }
+
+  function handleAdd() {
+    const newWatchedMovie = {
+      imdbID: selectedID,
+      title,
+      year,
+      poster,
+      imdbRating: Number(imdbRating),
+      runtime: Number(runtime.split(" ").at(0)),
+      userRating,
+    };
+
+    onAddwatched(newWatchedMovie);
+    handleClose();
+  }
+
   useEffect(
     function () {
       function callback(e) {
@@ -75,24 +98,6 @@ export function MovieDetails({
     [title]
   );
 
-  function handleOnrating(rating) {
-    setUserRating(rating);
-  }
-
-  function handleAdd() {
-    const newWatchedMovie = {
-      imdbID: selectedID,
-      title,
-      year,
-      poster,
-      imdbRating: Number(imdbRating),
-      runtime: Number(runtime.split(" ").at(0)),
-      userRating,
-    };
-
-    onAddwatched(newWatchedMovie);
-    handleClose();
-  }
   return (
     <div className="details">
       {isloading ? (
