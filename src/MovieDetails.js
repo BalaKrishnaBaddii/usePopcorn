@@ -12,6 +12,8 @@ export function MovieDetails({
   const [isloading, setIsloading] = useState(false);
   const [userRating, setUserRating] = useState(0);
   const isWatched = watched.map((movie) => movie.imdbID).includes(selectedID);
+  // const [avgRating, setAvgrating] = useState(0);
+
   const watchedUserRating = watched.find(
     (movie) => movie.imdbID === selectedID
   )?.userRating;
@@ -50,6 +52,7 @@ export function MovieDetails({
 
     onAddwatched(newWatchedMovie);
     handleClose();
+    // setAvgrating((userRating + Number(imdbRating)) / 2);
   }
 
   useEffect(
@@ -120,6 +123,7 @@ export function MovieDetails({
               </p>
             </div>
           </header>
+          {/* <p>rating: {avgRating}</p> */}
           <section>
             <div className="rating">
               {!isWatched ? (
