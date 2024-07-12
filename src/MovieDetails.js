@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import StarRatings from "./StarRatings";
 import { KEY, Loader } from "./App";
 
-export function MovieDetails({
+export default function MovieDetails({
   selectedID,
   handleClose,
   onAddwatched,

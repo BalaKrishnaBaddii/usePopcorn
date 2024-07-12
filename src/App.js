@@ -8,7 +8,7 @@ import Box from "./Main/Box";
 import MovieList from "./Main/ListBox/MovieList";
 import MovieSummary from "./Main/SummaryBox/MovieSummary";
 import WatchList from "./Main/SummaryBox/WatchList";
-import { MovieDetails } from "./MovieDetails";
+import MovieDetails from "./MovieDetails";
 
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
