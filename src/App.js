@@ -22,8 +22,8 @@ export default function App() {
   const [error, setError] = useState("");
   const [selectedID, setSelectedid] = useState(null);
   // const [watched, setWatched] = useState([]);
-  const [watched, setWatched] = useState(() =>
-    JSON.parse(localStorage.getItem("watched"))
+  const [watched, setWatched] = useState(
+    () => JSON.parse(localStorage.getItem("watched")) || []
   );
 
   function handleSelectedMovie(id) {
@@ -61,13 +61,15 @@ export default function App() {
   useEffect(
     function () {
       const controller = new AbortController();
+      const signal = controller.signal;
+
       async function fetchMovies() {
         try {
           setIsloading(true);
           setError("");
           const res = await fetch(
             `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
-            { signal: controller.signal }
+            { signal: signal }
           );
 
           if (!res.ok) {
@@ -81,8 +83,8 @@ export default function App() {
           setMovies(data.Search);
           setError("");
         } catch (err) {
+          console.log(err.message);
           if (err.name !== "AbortError") {
-            console.log(err.message);
             setError(err.message);
           }
         } finally {
@@ -98,7 +100,7 @@ export default function App() {
 
       fetchMovies();
 
-      return function () {
+      return () => {
         controller.abort();
       };
     },
