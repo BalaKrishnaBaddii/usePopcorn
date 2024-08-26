@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import StarRatings from "./StarRatings";
 import { KEY, Loader } from "./App";
 
@@ -13,6 +13,14 @@ export default function MovieDetails({
   const [userRating, setUserRating] = useState(0);
   const isWatched = watched.map((movie) => movie.imdbID).includes(selectedID);
   // const [avgRating, setAvgrating] = useState(0);
+  const countRef = useRef(0);
+
+  useEffect(
+    function () {
+      if (userRating) countRef.current = countRef.current + 1;
+    },
+    [userRating]
+  );
 
   const watchedUserRating = watched.find(
     (movie) => movie.imdbID === selectedID
@@ -48,6 +56,7 @@ export default function MovieDetails({
       imdbRating: Number(imdbRating),
       runtime: Number(runtime.split(" ").at(0)),
       userRating,
+      countRatingDecisions: countRef.current,
     };
 
     onAddwatched(newWatchedMovie);

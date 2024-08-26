@@ -16,7 +16,7 @@ const average = (arr) =>
 export const KEY = "1934cdbf";
 
 export default function App() {
-  const [query, setQuery] = useState("avengers");
+  const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
   const [isloading, setIsloading] = useState(false);
   const [error, setError] = useState("");
